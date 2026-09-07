@@ -1,4 +1,36 @@
+"use client";
+
+import { getMovieDetails } from "@/services/details";
+import { useEffect, useState } from "react";
+
 export default function MovieCard({ movie }) {
+
+    const movie_id = movie.movie_id;
+
+    const [details, setDetails] = useState(null);
+
+    useEffect(() => {
+
+        async function fetchDetails() {
+            try {
+                const data = await getMovieDetails(movie_id);
+                setDetails(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchDetails();
+
+    }, [movie_id]);
+
+
+    if (!details) {
+        return (
+            <div className="aspect-[2/3] animate-pulse rounded-xl bg-zinc-900" />
+        );
+    }
+
 
     return (
         <div className="group cursor-pointer">
@@ -6,8 +38,8 @@ export default function MovieCard({ movie }) {
             <div className="overflow-hidden rounded-xl bg-zinc-900">
 
                 <img
-                    src={movie.poster_url}
-                    alt={movie.title}
+                    src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                    alt={details.title}
                     className="
                         aspect-[2/3]
                         w-full
@@ -20,19 +52,21 @@ export default function MovieCard({ movie }) {
 
             </div>
 
+
             <h3 className="mt-3 truncate font-semibold">
-                {movie.title}
+                {details.title}
             </h3>
+
 
             <div className="mt-1 flex gap-3 text-sm text-zinc-500">
 
                 <span>
-                    ⭐ {movie.rating ?? "N/A"}
+                    ⭐ {details.vote_average ?? "N/A"}
                 </span>
 
-                <span>
-                    {movie.year}
-                </span>
+                {/* <span>
+                    {movie_id}
+                </span> */}
 
             </div>
 

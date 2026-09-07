@@ -15,7 +15,7 @@ export default function MovieGrid({ movies }) {
             {movies.map((movie) => (
 
                 <MovieCard
-                    key={movie.id}
+                    key={movie.movie_id}
                     movie={movie}
                 />
 

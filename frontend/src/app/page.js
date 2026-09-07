@@ -16,6 +16,7 @@ export default function Home() {
     const [error, setError] = useState("");
 
 
+
     const handleSearch = async (movie) => {
 
         try {
@@ -26,6 +27,7 @@ export default function Home() {
             const data = await getRecommendations(movie);
 
             setMovies(data.recommendations);
+
 
         } catch (error) {
 
@@ -44,7 +46,7 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-black text-white">
 
-            {/* <Navbar /> */}
+            <Navbar />
 
             <section className="px-6 pt-24 pb-16 text-center">
 
