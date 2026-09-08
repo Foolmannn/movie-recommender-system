@@ -37,7 +37,8 @@ def get_recommendations(movie: str):
 
     return {
         "movie": movie,
-        "recommendations": recommendations
+        "searched_movie_id":recommendations[0],
+        "recommendations": recommendations[1]
     }
 
 @app.get("/movies/search")

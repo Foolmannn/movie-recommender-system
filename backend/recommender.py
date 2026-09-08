@@ -27,7 +27,7 @@ def recommend(movie_title, n=5):
     )[1:n+1]
 
     # print(movie_list)
-
+    searched_movie_id=int(movies.iloc[movie_index]['movie_id'])
     recommendations = []
 
     for index, score in movie_list:
@@ -38,6 +38,6 @@ def recommend(movie_title, n=5):
             "similarity": float(score)
         })
 
-    return recommendations
+    return searched_movie_id,recommendations
 
 # print(recommend('Avatar'))

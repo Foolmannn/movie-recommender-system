@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { getMovieDetails } from "@/services/details";
 import { useEffect, useState } from "react";
 
@@ -37,18 +37,20 @@ export default function MovieCard({ movie }) {
 
             <div className="overflow-hidden rounded-xl bg-zinc-900">
 
-                <img
-                    src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
-                    alt={details.title}
-                    className="
-                        aspect-[2/3]
-                        w-full
-                        object-cover
-                        transition-transform
-                        duration-300
-                        group-hover:scale-105
-                    "
-                />
+                <Image
+                src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
+                alt={details.title}
+                width={500}
+                height={750}
+                className="
+                    aspect-[2/3]
+                    w-full
+                    object-cover
+                    transition-transform
+                    duration-300
+                    group-hover:scale-105
+                "
+            />
 
             </div>
 

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 import Navbar from "@/components/Navbar";
@@ -72,11 +71,11 @@ export default function Home() {
                     <br />
 
                     <span className="text-zinc-500">
-                        favorite movie.
+                    favorite movie
                     </span>
                 </h1>
 
-                <p className="mx-auto mt-6 max-w-xl text-zinc-400">
+                <p className="mx-auto mt-6 max-w-xl text-zinc-400 font-bold">
                     Discover movies similar to the ones
                     you already love.
                 </p>
