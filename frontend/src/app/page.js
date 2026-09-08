@@ -59,7 +59,7 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-black text-white">
 
-            <Navbar />
+            {/* <Navbar /> */}
 
             <section className="px-6 pt-24 pb-16 text-center">
 
