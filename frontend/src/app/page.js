@@ -9,7 +9,8 @@ import { getRecommendations } from "@/services/api";
 
 export default function Home() {
 
-    const [movies, setMovies] = useState([]);
+    const [recommendations, setRecommendations] = useState([]);
+    const [searchedMovie, setSearchedMovie] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [selectedMovie, setSelectedMovie] = useState(null);
@@ -34,8 +35,8 @@ export default function Home() {
             const data = await getRecommendations(
                 selectedMovie.title
             );
-
-            setMovies(data.recommendations);
+            setSearchedMovie(data.searched_movie_id)
+            setRecommendations(data.recommendations);
 
         } catch (error) {
 
@@ -97,14 +98,16 @@ export default function Home() {
             )}
 
 
-            {movies.length > 0 && (
+            {recommendations.length > 0 && (
                 <section className="mx-auto max-w-7xl px-6 pb-20">
 
-                    <h2 className="mb-6 text-2xl font-bold">
-                        Recommended Movies
-                    </h2>
+               
 
-                    <MovieGrid movies={movies} />
+                    {/* Pass both props directly into MovieGrid */}
+                    <MovieGrid 
+                        searchedMovie={searchedMovie} 
+                        recommendations={recommendations} 
+                    />
 
                 </section>
             )}
