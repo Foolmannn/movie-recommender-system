@@ -1,6 +1,7 @@
 import MovieCard from "./MovieCard";
 import MovieDetailsCard from "./MovieDetailsCard";
 import MovieCastCard from "./MovieCastCard";
+import DirectorCard from "./DirectorCard";
 
 export default function MovieGrid({ searchedMovie, recommendations = [] }) {
     // console.log(recommendations)
@@ -35,6 +36,7 @@ export default function MovieGrid({ searchedMovie, recommendations = [] }) {
     {/* Left Column: Natural-sized Poster (1 col on desktop) */}
     <div className="w-full max-w-xs mx-auto md:max-w-none md:col-span-1">
       <MovieCard movie={{ movie_id: searchedMovie }} />
+      <DirectorCard movie={{ movie_id: searchedMovie }}/>
     </div>
 
     {/* Right Column: Details (Top) + Cast (Bottom) fitting within the poster's height */}

@@ -15,20 +15,35 @@ export async function GET(request, { params }) {
 
         const data = await response.json();
 
-        const cast = data.cast.slice(0, 10).map((person) => ({
+        // Top 10 Cast Members
+        const cast = (data.cast || []).slice(0, 10).map((person) => ({
             id: person.id,
             name: person.name,
             character: person.character,
             profile_path: person.profile_path,
         }));
 
-        return Response.json(cast);
+        // Extract Directors from Crew
+        const directors = (data.crew || [])
+            .filter((person) => person.job === "Director")
+            .map((person) => ({
+                id: person.id,
+                name: person.name,
+                job: person.job,
+                profile_path: person.profile_path,
+            }));
+
+        // Return combined credits object
+        return Response.json({
+            cast,
+            directors,
+        });
 
     } catch (error) {
-        console.error("CAST API ERROR:", error);
+        console.error("CREDITS API ERROR:", error);
 
         return Response.json(
-            { error: "Failed to fetch cast" },
+            { error: "Failed to fetch credits" },
             { status: 500 }
         );
     }

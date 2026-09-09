@@ -5,7 +5,6 @@ import { getMovieCast } from "@/services/cast";
 
 export default function MovieCastCard({ movie }) {
   const movie_id = movie?.movie_id;
-  const [cast, setCast] = useState([]);
   const [director, setDirector] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,10 +15,9 @@ export default function MovieCastCard({ movie }) {
       try {
         setLoading(true);
         const castData = await getMovieCast(movie_id);
-        setCast(castData.cast || []);
         setDirector(castData.directors || []);
       } catch (error) {
-        console.error("Failed to load cast:", error);
+        console.error("Failed to load director:", error);
       } finally {
         setLoading(false);
       }
@@ -34,19 +32,17 @@ export default function MovieCastCard({ movie }) {
     );
   }
 
-  if (!cast.length) return null;
+  if (!director.length) return null;
 
-  console.log(cast)
   console.log(director)
 
   return (
-    <div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl backdrop-blur-md text-left">
+    <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl backdrop-blur-md text-left">
       <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-        Cast
+        Director
       </h3>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {cast.map((person) => (
+        {director.map((person) => (
           <div
             key={person.id}
             className="group bg-slate-800/40 border border-slate-800 rounded-xl overflow-hidden"
@@ -71,13 +67,10 @@ export default function MovieCastCard({ movie }) {
               <p className="text-sm font-semibold text-slate-200 truncate">
                 {person.name}
               </p>
-              <p className="text-xs text-slate-400 truncate mt-0.5">
-                {person.character || "Unknown role"}
-              </p>
+
             </div>
           </div>
         ))}
       </div>
-    </div>
   );
 }
