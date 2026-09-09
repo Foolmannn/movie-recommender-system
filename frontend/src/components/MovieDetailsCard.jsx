@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { getMovieDetails } from "@/services/details";
+import DirectorCard from "./DirectorCard";
+
 
 export default function MovieDetailsCard({ movie }) {
   const movie_id = movie?.movie_id;
@@ -45,23 +47,25 @@ export default function MovieDetailsCard({ movie }) {
       : "N/A";
 
   return (
-<div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl backdrop-blur-md text-left flex flex-col md:flex-row gap-6">
+<div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl backdrop-blur-md text-left flex flex-col md:flex-row gap-6 items-stretch">
   
-  {/* Left Column: Title, Stats, Overview, Genres */}
-  <div className="w-full md:w-1/2 flex flex-col gap-3 pr-0 md:pr-4 md:border-r border-slate-800/80">
+  {/* Single Left Column: All Details Stacked Vertically */}
+  <div className="flex-1 flex flex-col justify-between gap-3 min-w-0">
+    
+    {/* Header: Title, Tagline, Badges */}
     <div>
-      <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight line-clamp-2">
+      <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight line-clamp-1">
         {details.title}{" "}
         <span className="text-slate-400 font-normal">({releaseYear})</span>
       </h2>
 
       {details.tagline && (
-        <p className="text-xs italic text-slate-400 mt-1 line-clamp-1">
+        <p className="text-xm italic text-slate-400 mt-0.5 line-clamp-1">
           &quot;{details.tagline}&quot;
         </p>
       )}
 
-      <div className="flex flex-wrap items-center gap-2 mt-2.5 text-xs text-slate-300">
+      <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-slate-300">
         {details.vote_average > 0 && (
           <span className="flex items-center gap-1 font-semibold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
             ★ {details.vote_average.toFixed(1)}
@@ -82,23 +86,54 @@ export default function MovieDetailsCard({ movie }) {
       </div>
     </div>
 
-    {/* Overview moved here to fill left column space */}
-    <div className="pt-2 border-t border-slate-800/60">
-      <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+    {/* Overview Section */}
+    <div className=" border-t border-slate-800/60">
+      <h3 className="text-[13px] font-bold uppercase tracking-wider text-slate-400 mb-1">
         Overview
       </h3>
-      <p className="text-slate-300 text-xs sm:text-sm leading-relaxed line-clamp-3 overflow-y-auto pr-1">
+      <p className="text-slate-300 text-xs sm:text-sm leading-relaxed line-clamp-2">
         {details.overview || "No overview available for this movie."}
       </p>
     </div>
 
-    {/* Genres at bottom of left column */}
+    {/* Inline Key Info & Production Badges */}
+    <div className="flex flex-wrap items-center gap-2 text-xs pt-2 border-t border-slate-800/60">
+      <div className="bg-slate-800/40 border border-slate-800 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+        <span className="text-slate-400 text-[14px] font-medium">Lang:</span>
+        <span className="text-slate-200 font-semibold uppercase text-[13px]">
+          {details.original_language || "N/A"}
+        </span>
+      </div>
+
+      <div className="bg-slate-800/40 border border-slate-800 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+        <span className="text-slate-400 text-[14px] font-medium">Revenue:</span>
+        <span className="text-slate-200 font-semibold text-[14px]">
+          {formatCurrency(details.revenue)}
+        </span>
+      </div>
+
+      {/* Production Companies Badges */}
+      {details.production_companies?.length > 0 && (
+        <div className="flex flex-wrap gap-1 items-center">
+          {details.production_companies.slice(0, 3).map((company) => (
+            <span
+              key={company.id}
+              className="bg-slate-800/60 text-slate-300 px-2 py-1 rounded-md text-[12px] border border-slate-700/50 truncate max-w-[130px]"
+            >
+              {company.name}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {/* Genres */}
     {details.genres?.length > 0 && (
-      <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-800/60 mt-auto">
+      <div className="flex flex-wrap gap-1.5 pt-1 border-t border-slate-800/60">
         {details.genres.map((genre) => (
           <span
             key={genre.id}
-            className="text-[11px] font-medium text-slate-300 bg-slate-800/80 border border-slate-700/60 px-2 py-0.5 rounded-full"
+            className="text-[13px] font-medium text-slate-300 bg-slate-800/80 border border-slate-700/60 px-2 py-0.5 rounded-full"
           >
             {genre.name}
           </span>
@@ -107,45 +142,9 @@ export default function MovieDetailsCard({ movie }) {
     )}
   </div>
 
-  {/* Right Column: Key Info & Production Companies */}
-  <div className="w-full md:w-1/2 flex flex-col justify-center gap-2.5">
-    <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-      Key Info
-    </h3>
-
-    <div className="grid grid-cols-2 gap-2 text-xs">
-      <div className="bg-slate-800/40 border border-slate-800 p-2.5 rounded-lg">
-        <span className="text-slate-400 text-[10px] font-medium block">Language</span>
-        <span className="text-slate-200 font-semibold uppercase block mt-0.5">
-          {details.original_language || "N/A"}
-        </span>
-      </div>
-
-      <div className="bg-slate-800/40 border border-slate-800 p-2.5 rounded-lg">
-        <span className="text-slate-400 text-[10px] font-medium block">Revenue</span>
-        <span className="text-slate-200 font-semibold block truncate mt-0.5">
-          {formatCurrency(details.revenue)}
-        </span>
-      </div>
-    </div>
-
-    {details.production_companies?.length > 0 && (
-      <div className="bg-slate-800/40 border border-slate-800 p-2.5 rounded-lg text-xs">
-        <span className="text-slate-400 text-[10px] font-medium block mb-1.5">
-          Production
-        </span>
-        <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto pr-1">
-          {details.production_companies.map((company) => (
-            <span
-              key={company.id}
-              className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[10px] border border-slate-700/50 truncate max-w-[150px]"
-            >
-              {company.name}
-            </span>
-          ))}
-        </div>
-      </div>
-    )}
+  {/* Right Column: Director Card */}
+  <div className="flex-shrink-0 flex items-center justify-center">
+    <DirectorCard movie={movie} />
   </div>
 
 </div>

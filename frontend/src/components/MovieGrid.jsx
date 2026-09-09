@@ -2,10 +2,39 @@ import MovieCard from "./MovieCard";
 import MovieDetailsCard from "./MovieDetailsCard";
 import MovieCastCard from "./MovieCastCard";
 import DirectorCard from "./DirectorCard";
+import Link from "next/link";
+import { getMovieTrailerUrl } from "@/services/trailer";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function MovieGrid({ searchedMovie, recommendations = [] }) {
-    // console.log(recommendations)
-    // console.log(searchedMovie)
+  const [trailerUrl, setTrailerUrl] = useState(null);
+
+    const movieId = typeof searchedMovie === "object" 
+        ? searchedMovie?.id || searchedMovie?.movie_id 
+        : searchedMovie;
+
+    useEffect(() => {
+        if (!movieId) return;
+
+        async function fetchTrailer() {
+            try {
+                const res = await fetch(`/api/movies/${movieId}/trailer`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setTrailerUrl(data.url);
+                } else {
+                    setTrailerUrl(null);
+                }
+            } catch (error) {
+                console.error("Failed to fetch trailer:", error);
+                setTrailerUrl(null);
+            }
+        }
+
+        fetchTrailer();
+    }, [movieId]);
+    // console.log(trailerUrl)
   return (
     <div className="w-full space-y-10">
             {/*  Recommendations */}
@@ -36,7 +65,19 @@ export default function MovieGrid({ searchedMovie, recommendations = [] }) {
     {/* Left Column: Natural-sized Poster (1 col on desktop) */}
     <div className="w-full max-w-xs mx-auto md:max-w-none md:col-span-1">
       <MovieCard movie={{ movie_id: searchedMovie }} />
-      <DirectorCard movie={{ movie_id: searchedMovie }}/>
+      <div className="mt-10">
+            {/* Your component JSX */}
+            {trailerUrl && (
+                <a 
+                    href={trailerUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-4 rounded-lg transition-colors"
+                >
+                    ▶ Watch Trailer on YouTube
+                </a>
+            )}
+        </div>
     </div>
 
     {/* Right Column: Details (Top) + Cast (Bottom) fitting within the poster's height */}

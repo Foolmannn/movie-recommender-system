@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 
-import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import MovieGrid from "@/components/MovieGrid";
 
@@ -59,7 +58,6 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-black text-white">
 
-            {/* <Navbar /> */}
 
             <section className="px-6 pt-3 pb-7 text-center">
 
