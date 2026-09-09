@@ -61,13 +61,9 @@ export default function Home() {
 
             {/* <Navbar /> */}
 
-            <section className="px-6 pt-24 pb-16 text-center">
+            <section className="px-6 pt-3 pb-7 text-center">
 
-                <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
-                    AI Movie Recommender
-                </p>
-
-                <h1 className="mt-5 text-5xl md:text-7xl font-bold">
+                <h1 className="mt-5 text-5xl md:text-6xl font-bold">
                     Find your next
                     <br />
 
@@ -76,7 +72,7 @@ export default function Home() {
                     </span>
                 </h1>
 
-                <p className="mx-auto mt-6 max-w-xl text-zinc-400 font-bold">
+                <p className="mx-auto mt-4 max-w-xl text-zinc-400 font-bold">
                     Discover movies similar to the ones
                     you already love.
                 </p>

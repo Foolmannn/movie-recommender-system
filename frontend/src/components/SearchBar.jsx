@@ -71,7 +71,7 @@ export default function SearchBar({ onSelect, onSearch, loading }) {
     <form
       ref={searchRef}
       onSubmit={handleSubmit}
-      className="relative mx-auto mt-10 flex max-w-xl gap-2"
+      className="relative mx-auto mt-6 flex max-w-xl gap-2"
     >
       <div className="relative flex-1">
         <input
