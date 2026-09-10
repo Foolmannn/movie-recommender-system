@@ -6,6 +6,26 @@ with open("movies.pkl", "rb") as f:
 with open("similarity.pkl", "rb") as f:
     similarity = pickle.load(f)
 
+# For using model downloaded from the HF repo
+
+
+# from huggingface_hub import hf_hub_download
+
+# similarity_model_path = hf_hub_download(
+#     repo_id="Foolmannn/mrs-model",
+#     filename="similarity.pkl"
+# )
+# movies_model_path = hf_hub_download(
+#     repo_id="Foolmannn/mrs-model",
+#     filename="movies.pkl"
+# )
+
+# with open(similarity_model_path, "rb") as f:
+#     similarity = pickle.load(f)
+
+# with open(movies_model_path, "rb") as f:
+#     movies = pickle.load(f)
+
 
 def recommend(movie_title, n=5):
 
