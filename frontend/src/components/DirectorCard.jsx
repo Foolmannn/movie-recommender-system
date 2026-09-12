@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getMovieCast } from "@/services/cast";
 
@@ -50,10 +50,13 @@ export default function MovieCastCard({ movie }) {
             {/* Profile Image */}
             <div className="aspect-[2/3] w-full overflow-hidden bg-slate-800">
               {person.profile_path ? (
-                <img
+                <Image
                   src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
                   alt={person.name}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                  width={200}
+                  height={300}
                 />
               ) : (
                 <div className="h-full w-full flex items-center justify-center text-slate-500 text-xs">

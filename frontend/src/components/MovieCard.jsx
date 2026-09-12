@@ -50,6 +50,7 @@ export default function MovieCard({ movie }) {
                     duration-300
                     group-hover:scale-105
                 "
+                priority
             />
 
             </div>

@@ -53,9 +53,9 @@ export default function MovieGrid({
       // Make clicked movie the new searched movie
       setSearchedMovie(movie);
 
-      // Get recommendations for clicked movie
+     // Get recommendations
       const data = await getRecommendations(
-        movie.title || movie.name || movie.movie_title
+        movie.title 
       );
 
       setRecommendations(data.recommendations || []);

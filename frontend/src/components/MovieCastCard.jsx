@@ -1,12 +1,12 @@
 "use client";
-
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getMovieCast } from "@/services/cast";
 
 export default function MovieCastCard({ movie }) {
   const movie_id = movie?.movie_id;
   const [cast, setCast] = useState([]);
-  const [director, setDirector] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +17,6 @@ export default function MovieCastCard({ movie }) {
         setLoading(true);
         const castData = await getMovieCast(movie_id);
         setCast(castData.cast || []);
-        setDirector(castData.directors || []);
       } catch (error) {
         console.error("Failed to load cast:", error);
       } finally {
@@ -36,8 +35,7 @@ export default function MovieCastCard({ movie }) {
 
   if (!cast.length) return null;
 
-  console.log(cast)
-  console.log(director)
+  // console.log(cast)
 
   return (
     <div className="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-2xl backdrop-blur-md text-left">
@@ -54,10 +52,13 @@ export default function MovieCastCard({ movie }) {
             {/* Profile Image */}
             <div className="aspect-[2/3] w-full overflow-hidden bg-slate-800">
               {person.profile_path ? (
-                <img
+                <Image
                   src={`https://image.tmdb.org/t/p/w185${person.profile_path}`}
                   alt={person.name}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={185}
+                  height={278}
+                  loading="lazy"
                 />
               ) : (
                 <div className="h-full w-full flex items-center justify-center text-slate-500 text-xs">
