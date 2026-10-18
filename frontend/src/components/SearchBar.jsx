@@ -148,7 +148,7 @@ export default function SearchBar({ onSelect, onSearch, loading }) {
                 disabled={loading}
                 className="rounded-xl bg-white px-5 py-3 font-semibold text-black transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
-                {loading ? "..." : "Search"}
+                {loading ? "Searching..." : "Search"}
             </button>
 
         </form>

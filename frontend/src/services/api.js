@@ -51,7 +51,7 @@ export async function getRecommendations(movieTitle) {
         // Wait before retry
         if (attempt < maxAttempts) {
             await new Promise((resolve) =>
-                setTimeout(resolve, 5000)
+                setTimeout(resolve, 1000)
             );
         }
     }
